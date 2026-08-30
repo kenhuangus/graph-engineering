@@ -1,6 +1,8 @@
 # Graph Engineering — Companion Homework
 
-Companion exercises for **Graph Engineering: From Agent Loops to Networked AI Systems** by Ken Huang.
+Private companion for **Graph Engineering** by Ken Huang.
+
+Canonical repo: https://github.com/kenhuangus/harness-eng (private; owner `kenhuangus`).
 
 These are **reference solutions**. Attempt the assignment in each chapter's `homework.md` before reading `src/`. The tests are the grader: they assert observable behavior, not imports.
 
@@ -16,7 +18,7 @@ python -m pytest
 Or from anywhere:
 
 ```bash
-python -m pytest /workspace/book/homework
+python -m pytest
 ```
 
 That command collects **every chapter**. You can also run one chapter:
@@ -33,7 +35,7 @@ Constraints for every chapter: Python 3.12+, pytest, stdlib only (numpy is not r
 |------|---------|---------------------|
 | ch01 | The Week the Word Arrived | Reconstruct a directed naming graph from speech-act events and detect a claimed coincidence edge. |
 | ch02 | Two Graphs, One Word | Classify a `GraphObject` as `G_A`, `G_K`, or a run trace; reject mash-ups with a reason code. |
-| ch03 | The Five Layers | Score a structured system description against prompt / context / loop / graph / memory. |
+| ch03 | Harness as Paradigm — Siblings, Not a Ladder | Score a structured system description against prompt / context / loop / graph / memory. |
 | ch04 | Anatomy of an Agent Graph | Validate a `GraphSpec` (typed nodes, edges, state `S`, halt, optional interrupt). |
 | ch05 | When Not to Build a Graph | Napkin test: `JobSpec` → stay on a loop or build a graph, with closed-set reasons. |
 | ch06 | Patterns That Earn Their Keep | Tiny runtime: `sequential_path`, `supervisor_star`, `fanout_join` on the same job. |
