@@ -15,6 +15,8 @@ Module: `authz_graph.py`.
 - `reachable(src, dst, *, blocked=()) -> bool` — directed reachability with nodes in `blocked` removed.
 - `is_cut_vertex(src, dst, cut) -> bool` — src reaches dst, but not after removing `cut`.
 
+The in-chapter listing `chapter11_authz_reachability.py` is also in `src/`. It is not the assignment. It is the reachability checker from the chapter: ungated paths, blast radius, and the three fixtures.
+
 The tests use `start → gate → spend → halt` plus `start → public → halt`. `gate` is a cut vertex on the path to `spend`. Removing it must not leak reachability through `public`.
 
 ## How to run

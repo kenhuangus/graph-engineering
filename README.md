@@ -50,7 +50,7 @@ Constraints for every chapter: Python 3.12+, pytest, stdlib only (numpy is not r
 
 ## Book listings vs homework modules
 
-In-chapter listings are pedagogical cuts. The graded homework is the smaller public API in `chNN/src/`.
+In-chapter listings are pedagogical programs. The graded homework is the smaller public API in `chNN/src/`. Chapter 10 and 11 ship both files: run `python ch10/src/chapter10_three_machines.py` and `python ch11/src/chapter11_authz_reachability.py` from the repo root.
 
 | Dir  | In-chapter listing (if named) | Graded module |
 |------|-------------------------------|---------------|

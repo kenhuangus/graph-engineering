@@ -10,6 +10,8 @@ Module: `kahn.py`.
 - `topological_sort(nodes, edges) -> list[str]` — Kahn's algorithm. Raise `CycleError` (a `ValueError`) on a cycle. Deterministic given `nodes` order.
 - `ready_set(nodes, edges, done) -> set[str]` — nodes not in `done` whose **every** predecessor is in `done`.
 
+The in-chapter listing `chapter10_three_machines.py` is also in `src/`. It is not the assignment. Run it after the homework if you want the DAG / FSM / allowlist demo from the chapter.
+
 The tests use a diamond: `A → B, A → C, B → D, C → D`.
 
 - Source `A` is first; both middles precede the sink.
