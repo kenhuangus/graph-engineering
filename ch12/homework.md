@@ -1,0 +1,35 @@
+# Chapter 12 — Graph Intelligence
+
+One layer of message passing. No GPU. No numpy required. Stdlib floats.
+
+## What you implement
+
+Module: `message_passing.py`.
+
+- `normalize(vec) -> list[float]` — L2 normalize; the zero vector stays zeros.
+- `message_pass(embeddings, edges, *, directed=False) -> dict[str, list[float]]`
+
+Update rule, one layer:
+
+```
+new[v] = normalize( self[v] + sum(self[u] for u in neighbors(v)) )
+```
+
+Neighbors are **undirected** by default (both ends of each edge). Pass `directed=True` to use out-neighbors only. Neighbor vectors are the *pre-update* embeddings. Isolated node: `normalize(self)`.
+
+## Tests you must survive
+
+- An isolated node's new embedding equals `normalize(self)` and has L2 length 1 (for a non-zero self).
+- A node with a neighbor gets a **different** embedding than an isolated copy of the same self-vector.
+- Directed mode is asymmetric: `a→b` updates `a` using `b`, not the other way around.
+
+## How to run
+
+```bash
+cd /workspace/book/homework
+python -m pytest ch12 -v
+```
+
+## Done when
+
+The isolated copy stays `[1, 0]` while the connected copy becomes the normalized sum with its neighbor.
