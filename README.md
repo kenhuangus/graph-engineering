@@ -48,6 +48,18 @@ Constraints for every chapter: Python 3.12+, pytest, stdlib only (numpy is not r
 | ch13 | Testing, Evaluation, Verification | `check_trace(trace, spec)` for halt, join, and unconstrained spend. |
 | ch14 | After the Word Dies | `retirement_report(spec, traces)`: dead nodes, dead edges, candidates. |
 
+## Book listings vs homework modules
+
+In-chapter listings are pedagogical cuts. The graded homework is the smaller public API in `chNN/src/`.
+
+| Dir  | In-chapter listing (if named) | Graded module |
+|------|-------------------------------|---------------|
+| ch03 | five sibling layers | `five_layers.py` |
+| ch10 | `chapter10_three_machines.py` | `kahn.py` |
+| ch11 | `chapter11_authz_reachability.py` | `authz_graph.py` |
+
+Homework URLs in the manuscript point at `https://github.com/kenhuangus/harness-eng/tree/main/chNN/`.
+
 ## Layout of a chapter
 
 ```

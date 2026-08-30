@@ -25,7 +25,7 @@ A good trace yields `[]`. Do not return a boolean.
 ## How to run
 
 ```bash
-cd /workspace/book/homework
+# from the repo root: https://github.com/kenhuangus/harness-eng
 python -m pytest ch13 -v
 ```
 

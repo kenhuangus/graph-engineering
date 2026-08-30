@@ -29,7 +29,7 @@ A cycle that includes a guarded back-edge (review → revise → review with `n 
 ## How to run
 
 ```bash
-cd /workspace/book/homework
+# from the repo root: https://github.com/kenhuangus/harness-eng
 python -m pytest ch04 -v
 ```
 

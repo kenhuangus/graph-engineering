@@ -22,7 +22,7 @@ The tests declare `classify → research → write → halt` plus an unused `spe
 ## How to run
 
 ```bash
-cd /workspace/book/homework
+# from the repo root: https://github.com/kenhuangus/harness-eng
 python -m pytest ch14 -v
 ```
 

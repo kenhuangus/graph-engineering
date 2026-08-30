@@ -29,7 +29,7 @@ Deterministic stand-in "workers" are fine (string formatting on `job.topic`). Do
 ## How to run
 
 ```bash
-cd /workspace/book/homework
+# from the repo root: https://github.com/kenhuangus/harness-eng
 python -m pytest ch06 -v
 ```
 

@@ -1,4 +1,4 @@
-# Chapter 3 — The Five Layers
+# Chapter 3 — Harness as Paradigm — Siblings, Not a Ladder
 
 Prompt, context, loop, graph, and memory are **siblings** under harness engineering, not rungs on a replacement ladder. Score a *structured* system description (not free text) and report which layer is actually doing the work.
 
@@ -29,7 +29,7 @@ Scoring must be a real function of the fields. Do not key off a fixture name. Su
 ## How to run
 
 ```bash
-cd /workspace/book/homework
+# from the repo root: https://github.com/kenhuangus/harness-eng
 python -m pytest ch03 -v
 ```
 
