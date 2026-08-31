@@ -38,3 +38,11 @@ python -m pytest ch06 -v
 ## Done when
 
 Order constraints hold, the join is complete, the supervisor star has no worker-to-worker messages, and the three patterns disagree on their traces.
+
+## Framework ports
+
+The graded module above is stdlib. The same predicate is also implemented with Google ADK 2.0, the OpenAI Agents SDK, the Anthropic Claude Agent SDK, LangGraph, and CrewAI in `frameworks/`. Those files call this chapter's `src/` module. No API keys. Default pytest does not collect them.
+
+```bash
+python ch06/frameworks/langgraph.py
+```

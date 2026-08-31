@@ -29,3 +29,11 @@ python -m pytest ch14 -v
 ## Done when
 
 Live path kept; unused specialist listed as a dead node and a candidate; unused specialist edges listed as dead edges.
+
+## Framework ports
+
+The graded module above is stdlib. The same predicate is also implemented with Google ADK 2.0, the OpenAI Agents SDK, the Anthropic Claude Agent SDK, LangGraph, and CrewAI in `frameworks/`. Those files call this chapter's `src/` module. No API keys. Default pytest does not collect them.
+
+```bash
+python ch14/frameworks/langgraph.py
+```

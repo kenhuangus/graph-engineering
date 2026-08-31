@@ -29,6 +29,17 @@ python -m pytest ch06 -v
 
 Constraints for every chapter: Python 3.12+, pytest, stdlib only (numpy is not required). Tests do not use the network and do not call paid APIs.
 
+## Framework ports
+
+Each chapter also ships five vendor-shaped implementations under `chNN/frameworks/`: Google ADK 2.0, OpenAI Agents SDK, Anthropic Claude Agent SDK, LangGraph, and CrewAI. They call the same stdlib module the grader uses. No API key. Default pytest does not collect them.
+
+```bash
+python ch04/frameworks/langgraph.py
+python frameworks/verify.py
+```
+
+See `frameworks/README.md`. Live SDKs are optional (`requirements-frameworks.txt`).
+
 ## Chapter index
 
 | Dir  | Chapter | One-line assignment |
@@ -70,6 +81,7 @@ chNN/
   homework.md   # the assignment (do this first)
   src/          # complete reference implementation
   tests/        # pytest that grades the public API
+  frameworks/   # ADK / OpenAI / Claude Agent SDK / LangGraph / CrewAI ports
 ```
 
 Tests import the public module names from `src/` via `pytest.ini` `pythonpath`. To grade your own module, put it on `PYTHONPATH` *ahead* of `src/` or replace the file in `src/`. Tests fail when the logic is wrong.

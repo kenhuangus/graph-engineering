@@ -1,0 +1,7 @@
+# Optional. Default homework is stdlib + pytest only (see requirements.txt).
+# Install these only if you want to swap a chapter port onto the live SDK.
+google-adk
+openai-agents
+claude-agent-sdk
+langgraph
+crewai

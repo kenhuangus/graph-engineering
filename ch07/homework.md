@@ -29,3 +29,11 @@ python -m pytest ch07 -v
 ## Done when
 
 Linear reducers merge to `["a", "b"]`; the review/revise cycle stops at `N`; unknown node compile-fails.
+
+## Framework ports
+
+The graded module above is stdlib. The same predicate is also implemented with Google ADK 2.0, the OpenAI Agents SDK, the Anthropic Claude Agent SDK, LangGraph, and CrewAI in `frameworks/`. Those files call this chapter's `src/` module. No API keys. Default pytest does not collect them.
+
+```bash
+python ch07/frameworks/langgraph.py
+```

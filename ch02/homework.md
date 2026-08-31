@@ -39,3 +39,11 @@ python -m pytest ch02 -v
 ## Done when
 
 Each clean class is accepted. At least three mash-up fixtures raise `MashupError` with the expected reason codes.
+
+## Framework ports
+
+The graded module above is stdlib. The same predicate is also implemented with Google ADK 2.0, the OpenAI Agents SDK, the Anthropic Claude Agent SDK, LangGraph, and CrewAI in `frameworks/`. Those files call this chapter's `src/` module. No API keys. Default pytest does not collect them.
+
+```bash
+python ch02/frameworks/langgraph.py
+```

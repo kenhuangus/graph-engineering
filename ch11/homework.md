@@ -29,3 +29,11 @@ python -m pytest ch11 -v
 ## Done when
 
 Ken can invoke `spend`; a stranger cannot; resume with the wrong hash is denied; `start` cannot reach `spend` with `gate` blocked.
+
+## Framework ports
+
+The graded module above is stdlib. The same predicate is also implemented with Google ADK 2.0, the OpenAI Agents SDK, the Anthropic Claude Agent SDK, LangGraph, and CrewAI in `frameworks/`. Those files call this chapter's `src/` module. No API keys. Default pytest does not collect them.
+
+```bash
+python ch11/frameworks/langgraph.py
+```

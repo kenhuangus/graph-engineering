@@ -51,3 +51,11 @@ python -m pytest ch01 -v
 ## Done when
 
 All Chapter 1 tests pass: twelve events produce twelve nodes and ten typed edges; Steinberger's out-degree is the number of direct responses; the Linear coincidence is reported missing; weakly-connected sizes split Linear off the speech-act cluster.
+
+## Framework ports
+
+The graded module above is stdlib. The same predicate is also implemented with Google ADK 2.0, the OpenAI Agents SDK, the Anthropic Claude Agent SDK, LangGraph, and CrewAI in `frameworks/`. Those files call this chapter's `src/` module. No API keys. Default pytest does not collect them.
+
+```bash
+python ch01/frameworks/langgraph.py
+```
