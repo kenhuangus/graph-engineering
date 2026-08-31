@@ -22,7 +22,7 @@ The tests declare `classify → research → write → halt` plus an unused `spe
 ## How to run
 
 ```bash
-# from the repo root: https://github.com/kenhuangus/harness-eng
+# from the repo root: https://github.com/kenhuangus/graph-engineering
 python -m pytest ch14 -v
 ```
 

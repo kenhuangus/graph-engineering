@@ -1,8 +1,8 @@
 # Graph Engineering — Companion Homework
 
-Private companion for **Graph Engineering** by Ken Huang.
+Companion homework for **Graph Engineering** by Ken Huang.
 
-Canonical repo: https://github.com/kenhuangus/harness-eng (private; owner `kenhuangus`).
+Canonical repo: https://github.com/kenhuangus/graph-engineering (public; owner `kenhuangus`).
 
 These are **reference solutions**. Attempt the assignment in each chapter's `homework.md` before reading `src/`. The tests are the grader: they assert observable behavior, not imports.
 
@@ -72,7 +72,7 @@ In-chapter listings are pedagogical programs. The graded homework is the smaller
 | ch10 | `chapter10_three_machines.py` | `kahn.py` |
 | ch11 | `chapter11_authz_reachability.py` | `authz_graph.py` |
 
-Homework URLs in the manuscript point at `https://github.com/kenhuangus/harness-eng/tree/main/chNN/`.
+Homework URLs in the manuscript point at `https://github.com/kenhuangus/graph-engineering/tree/main/chNN/`.
 
 ## Layout of a chapter
 

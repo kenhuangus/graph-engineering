@@ -32,7 +32,7 @@ Stdlib only. Decide from the fields, not from `name`. A record named `"kg"` that
 ## How to run
 
 ```bash
-# from the repo root: https://github.com/kenhuangus/harness-eng
+# from the repo root: https://github.com/kenhuangus/graph-engineering
 python -m pytest ch02 -v
 ```
 

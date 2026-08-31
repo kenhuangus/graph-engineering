@@ -26,7 +26,7 @@ Neighbors are **undirected** by default (both ends of each edge). Pass `directed
 ## How to run
 
 ```bash
-# from the repo root: https://github.com/kenhuangus/harness-eng
+# from the repo root: https://github.com/kenhuangus/graph-engineering
 python -m pytest ch12 -v
 ```
 

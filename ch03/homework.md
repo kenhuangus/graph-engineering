@@ -29,7 +29,7 @@ Scoring must be a real function of the fields. Do not key off a fixture name. Su
 ## How to run
 
 ```bash
-# from the repo root: https://github.com/kenhuangus/harness-eng
+# from the repo root: https://github.com/kenhuangus/graph-engineering
 python -m pytest ch03 -v
 ```
 

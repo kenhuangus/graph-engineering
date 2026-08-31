@@ -21,7 +21,7 @@ The tests use a diamond: `A → B, A → C, B → D, C → D`.
 ## How to run
 
 ```bash
-# from the repo root: https://github.com/kenhuangus/harness-eng
+# from the repo root: https://github.com/kenhuangus/graph-engineering
 python -m pytest ch10 -v
 ```
 

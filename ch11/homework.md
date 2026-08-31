@@ -22,7 +22,7 @@ The tests use `start → gate → spend → halt` plus `start → public → hal
 ## How to run
 
 ```bash
-# from the repo root: https://github.com/kenhuangus/harness-eng
+# from the repo root: https://github.com/kenhuangus/graph-engineering
 python -m pytest ch11 -v
 ```
 

@@ -18,7 +18,7 @@ The in-chapter listing `memory_graph_node.py` is also in `src/`. It is not the a
 ## How to run
 
 ```bash
-# from the repo root: https://github.com/kenhuangus/harness-eng
+# from the repo root: https://github.com/kenhuangus/graph-engineering
 python -m pytest ch08 -v
 ```
 

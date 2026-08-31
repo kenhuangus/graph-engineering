@@ -44,7 +44,7 @@ You may copy the ids from the tests; you must not invent an edge the events do n
 ## How to run
 
 ```bash
-# from the repo root: https://github.com/kenhuangus/harness-eng
+# from the repo root: https://github.com/kenhuangus/graph-engineering
 python -m pytest ch01 -v
 ```
 
