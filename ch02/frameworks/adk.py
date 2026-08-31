@@ -18,7 +18,7 @@ sys.path.insert(0, str(_ROOT / "ch02" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from graph_kinds import GraphObject, classify
-from runtime import LlmAgent, SequentialAgent, Workflow
+from runtime import LlmAgent, SequentialAgent
 
 
 def build():
@@ -48,4 +48,4 @@ def run(obj=None):
 
 
 if __name__ == "__main__":
-    print(build().run(None) if False else run())
+    print(build().run(None))

@@ -55,4 +55,4 @@ def invoke(prompt: str = "Validate a GraphSpec: typed nodes, edges, S, halt, ill
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())

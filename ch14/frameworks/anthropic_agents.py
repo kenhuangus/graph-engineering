@@ -50,4 +50,4 @@ def invoke(prompt: str = "retirement_report: dead nodes, dead edges, candidates.
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())

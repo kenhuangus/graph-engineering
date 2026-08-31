@@ -54,4 +54,4 @@ def invoke(prompt: str = "Score a structured system against prompt / context / l
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())

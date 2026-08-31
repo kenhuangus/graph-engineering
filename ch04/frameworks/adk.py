@@ -18,7 +18,7 @@ sys.path.insert(0, str(_ROOT / "ch04" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from graph_spec import Edge, GraphSpec, Node, StateSchema, validate_spec
-from runtime import LlmAgent, SequentialAgent, Workflow
+from runtime import LlmAgent, SequentialAgent
 
 
 def build():
@@ -57,4 +57,4 @@ def run(spec=None):
 
 
 if __name__ == "__main__":
-    print(build().run(None) if False else run())
+    print(build().run(None))

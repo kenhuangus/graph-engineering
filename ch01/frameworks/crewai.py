@@ -47,4 +47,4 @@ def invoke(inputs=None):
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())

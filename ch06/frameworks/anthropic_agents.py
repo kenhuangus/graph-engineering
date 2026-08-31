@@ -40,4 +40,4 @@ def invoke(prompt: str = "Same job on sequential_path, supervisor_star, and fano
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())

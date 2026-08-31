@@ -42,4 +42,4 @@ def invoke(prompt: str = "Kahn topological sort, cycle detection, ready-set on a
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())

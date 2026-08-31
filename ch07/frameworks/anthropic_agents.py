@@ -53,4 +53,4 @@ def invoke(prompt: str = "Classify → research → write → review with a guar
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())

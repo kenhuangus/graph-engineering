@@ -1,4 +1,4 @@
-"""Assert every chapter port's run() matches the stdlib module.
+"""Assert every chapter port's run() matches, and build/invoke/kickoff execute.
 
 No vendor packages. No network. From the repo root:
 
@@ -36,6 +36,38 @@ def _normalize(value):
     return value
 
 
+def exercise(mod, port: str, baseline):
+    """Run the framework entrypoints. Return extra failures."""
+    fails = []
+    built = mod.build()
+    if built is None:
+        fails.append(f"{port}: build() returned None")
+        return fails
+    if port == "adk":
+        got = _normalize(built.run(None))
+        if got != baseline:
+            fails.append(f"{port}: build().run(None) != run()")
+    elif port == "openai_agents":
+        got = _normalize(mod.invoke())
+        if got != baseline:
+            fails.append(f"{port}: invoke() != run()")
+    elif port == "anthropic_agents":
+        got = _normalize(mod.invoke())
+        if got != baseline:
+            fails.append(f"{port}: invoke() != run()")
+    elif port == "crewai":
+        got = _normalize(built.kickoff())
+        if got != baseline:
+            fails.append(f"{port}: kickoff() != run()")
+    elif port == "langgraph":
+        walked = built.invoke({})
+        if not isinstance(walked, dict):
+            fails.append(f"{port}: compile().invoke({{}}) did not return a dict")
+        elif "visited" in walked and not walked["visited"]:
+            fails.append(f"{port}: invoke() visited no nodes")
+    return fails
+
+
 def main() -> int:
     sys.path.insert(0, str(ROOT / "frameworks"))
     failed: list[str] = []
@@ -49,14 +81,15 @@ def main() -> int:
                 failed.append(f"{ch}/{port}: missing file")
                 continue
             mod = _load(path, f"{ch}_{port}")
-            if not hasattr(mod, "run"):
-                failed.append(f"{ch}/{port}: no run()")
+            if not hasattr(mod, "run") or not hasattr(mod, "build"):
+                failed.append(f"{ch}/{port}: missing run() or build()")
                 continue
             got = _normalize(mod.run())
             if first is None:
                 first = got
             elif got != first:
-                failed.append(f"{ch}/{port}: run() != {PORTS[0]} ({got!r} vs {first!r})")
+                failed.append(f"{ch}/{port}: run() != {PORTS[0]}")
+            failed.extend(f"{ch}/{msg}" for msg in exercise(mod, port, got))
             checked += 1
         sys.path.pop(0)
     if failed:
@@ -64,7 +97,7 @@ def main() -> int:
         for line in failed:
             print(" ", line)
         return 1
-    print(f"OK {checked} ports across 14 chapters")
+    print(f"OK {checked} ports across 14 chapters (run + build/invoke)")
     return 0
 
 

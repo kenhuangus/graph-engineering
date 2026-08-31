@@ -18,7 +18,7 @@ sys.path.insert(0, str(_ROOT / "ch05" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from napkin import JobSpec, napkin_test
-from runtime import LlmAgent, SequentialAgent, Workflow
+from runtime import LlmAgent, SequentialAgent
 
 
 def build():
@@ -39,4 +39,4 @@ def run(job=None):
 
 
 if __name__ == "__main__":
-    print(build().run(None) if False else run())
+    print(build().run(None))

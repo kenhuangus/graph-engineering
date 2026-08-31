@@ -39,4 +39,4 @@ def invoke(prompt: str = "One-layer message passing. This is G_L, not an agent g
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())

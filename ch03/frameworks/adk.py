@@ -18,7 +18,7 @@ sys.path.insert(0, str(_ROOT / "ch03" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from five_layers import SystemDescription, score_layers
-from runtime import LlmAgent, SequentialAgent, Workflow
+from runtime import LlmAgent, SequentialAgent
 
 
 def build():
@@ -56,4 +56,4 @@ def run(desc=None):
 
 
 if __name__ == "__main__":
-    print(build().run(None) if False else run())
+    print(build().run(None))

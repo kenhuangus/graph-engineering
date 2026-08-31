@@ -46,4 +46,4 @@ def invoke(prompt: str = "Ingest typed triples, query, walk neighbors, refuse ex
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())

@@ -36,4 +36,4 @@ def invoke(prompt: str = "Reconstruct a directed naming graph from speech-act ev
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())

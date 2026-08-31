@@ -18,7 +18,7 @@ sys.path.insert(0, str(_ROOT / "ch07" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 import mini_stategraph as mini
-from runtime import LlmAgent, SequentialAgent, Workflow
+from runtime import LlmAgent, SequentialAgent
 
 
 def build():
@@ -55,4 +55,4 @@ def run(topic="loops vs graphs"):
 
 
 if __name__ == "__main__":
-    print(build().run(None) if False else run())
+    print(build().run(None))

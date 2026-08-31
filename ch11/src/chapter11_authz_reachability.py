@@ -162,6 +162,15 @@ def fanout_blast() -> AuthzGraph:
     )
 
 
+def _print(*parts: object) -> None:
+    """Windows cp1252 cannot encode →; keep the arrow in findings() for tests."""
+    line = " ".join(str(p) for p in parts)
+    try:
+        print(line)
+    except UnicodeEncodeError:
+        print(line.replace("\u2192", "->"))
+
+
 if __name__ == "__main__":
     gov = governed_refund()
     assert gov.is_gated("issue_refund"), gov.findings()
@@ -177,6 +186,6 @@ if __name__ == "__main__":
     fan = fanout_blast()
     assert "apply" in fan.blast_radius("scout")
     assert any("bypass:" in n for n in fan.findings())
-    print("ok", gov.findings()[0])
-    print("ok", [n for n in notes if n.startswith("bypass:")][0])
-    print("ok blast", sorted(fan.blast_radius("scout")))
+    _print("ok", gov.findings()[0])
+    _print("ok", [n for n in notes if n.startswith("bypass:")][0])
+    _print("ok blast", sorted(fan.blast_radius("scout")))

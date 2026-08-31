@@ -7,6 +7,7 @@ stdlib module. No network. No paid API.
 """
 from __future__ import annotations
 
+import inspect
 from dataclasses import dataclass, field
 from typing import Any, Callable
 
@@ -23,11 +24,28 @@ def optional(name: str):
 
 
 def _call_tool(fn: Callable, payload: Any) -> Any:
-    """Call a chapter `run()` whether it takes a payload or no args."""
+    """Call a chapter `run()` whether it takes a payload or no args.
+
+    Do not catch TypeError from inside `fn`. A missing-argument TypeError is
+    avoided by inspecting the signature: no positional params → `fn()`;
+    `payload is None` and the first param has a default → `fn()` so
+    `run(topic="...")` does not bind `topic=None`.
+    """
     try:
-        return fn(payload)
-    except TypeError:
+        params = list(inspect.signature(fn).parameters.values())
+    except (TypeError, ValueError):
+        return fn() if payload is None else fn(payload)
+    positional = [
+        p
+        for p in params
+        if p.kind in (inspect.Parameter.POSITIONAL_ONLY, inspect.Parameter.POSITIONAL_OR_KEYWORD)
+    ]
+    if not positional:
         return fn()
+    first = positional[0]
+    if payload is None and first.default is not inspect.Parameter.empty:
+        return fn()
+    return fn(payload)
 
 
 # --- LangGraph-shaped ---
@@ -101,7 +119,12 @@ class CompiledGraph:
                 break
             fn = self.builder.nodes[nxt]
             update = fn(out) or {}
-            out.update(update)
+            for key, value in update.items():
+                reducer = self.builder.reducers.get(key)
+                if reducer is not None:
+                    out[key] = reducer(out.get(key), value)
+                else:
+                    out[key] = value
             current = nxt
             seen += 1
         return out

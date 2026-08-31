@@ -18,7 +18,7 @@ sys.path.insert(0, str(_ROOT / "ch10" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from kahn import has_cycle, ready_set, topological_sort
-from runtime import LlmAgent, SequentialAgent, Workflow
+from runtime import LlmAgent, SequentialAgent
 
 
 def build():
@@ -44,4 +44,4 @@ def run():
 
 
 if __name__ == "__main__":
-    print(build().run(None) if False else run())
+    print(build().run(None))

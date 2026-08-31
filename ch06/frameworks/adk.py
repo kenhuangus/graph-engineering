@@ -18,7 +18,7 @@ sys.path.insert(0, str(_ROOT / "ch06" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from pattern_runtime import fanout_join, make_job, sequential_path, supervisor_star
-from runtime import LlmAgent, SequentialAgent, Workflow
+from runtime import LlmAgent, SequentialAgent
 
 
 def build():
@@ -42,4 +42,4 @@ def run(pattern="sequential"):
 
 
 if __name__ == "__main__":
-    print(build().run(None) if False else run())
+    print(build().run(None))

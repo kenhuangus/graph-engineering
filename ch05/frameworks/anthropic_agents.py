@@ -37,4 +37,4 @@ def invoke(prompt: str = "Napkin test: stay on a loop or earn a graph. Sequentia
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())

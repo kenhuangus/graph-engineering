@@ -46,4 +46,4 @@ def invoke(prompt: str = "Classify a GraphObject as G_A, G_K, or a run trace; re
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())

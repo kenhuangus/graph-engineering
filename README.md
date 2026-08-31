@@ -31,7 +31,7 @@ Constraints for every chapter: Python 3.12+, pytest, stdlib only (numpy is not r
 
 ## Framework ports
 
-Each chapter also ships five vendor-shaped implementations under `chNN/frameworks/`: Google ADK 2.0, OpenAI Agents SDK, Anthropic Claude Agent SDK, LangGraph, and CrewAI. They call the same stdlib module the grader uses. No API key. Default pytest does not collect them.
+Each chapter also ships five vendor-shaped implementations under `chNN/frameworks/`: Google ADK 2.0, OpenAI Agents SDK, Anthropic Claude Agent SDK, LangGraph, and CrewAI. They call the same stdlib module the grader uses. No API key. `python -m pytest` now also runs every listing and port as a script (including under Windows cp1252) plus `frameworks/verify.py`.
 
 ```bash
 python ch04/frameworks/langgraph.py

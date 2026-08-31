@@ -47,4 +47,4 @@ def invoke(prompt: str = "Default-deny invoke, bound resume, cut-vertex reachabi
 
 
 if __name__ == "__main__":
-    print(run())
+    print(invoke())
