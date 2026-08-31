@@ -1,6 +1,6 @@
 # Chapter 4 — Anatomy of an Agent Graph
 
-Validate a `GraphSpec` before anyone runs it. A picture of boxes is not a spec.
+Validate a `GraphSpec` before anyone runs it. A picture of boxes is not a spec. In the chapter, every vertex also names what it may read, what it may write, what done looks like as a machine-visible check, and a failure threshold. Those four fields are this assignment's typed errors in prose.
 
 ## What you implement
 

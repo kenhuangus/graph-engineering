@@ -1,6 +1,6 @@
 # Chapter 5 — When Not to Build a Graph
 
-The napkin test. Most jobs should stay on a loop. A graph has to earn each extra node.
+The napkin test. Most jobs should stay on a loop. A graph has to earn each extra node. Score a coding agent on the five named failures in the chapter — context degradation, self-grading, sequential bottlenecks, hidden specification drift, unbounded retry — before you mint a reviewer node.
 
 ## What you implement
 

@@ -1,6 +1,6 @@
 # Chapter 9 — Operating Graphs in Production
 
-A step runner: retry, idempotency, circuit breaker. No network. Jitter and sleep are injected so tests do not wait on a wall clock.
+A step runner: retry, idempotency, circuit breaker. No network. Jitter and sleep are injected so tests do not wait on a wall clock. In the chapter, a coding graph in an existing repo is still this object: bounded retry on compile and tests, not on `apply_patch`; escalation is the interrupt or the open breaker.
 
 ## What you implement
 

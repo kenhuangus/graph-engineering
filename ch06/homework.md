@@ -1,6 +1,6 @@
 # Chapter 6 — Patterns That Earn Their Keep
 
-A tiny in-memory runtime. No LLM. No HTTP. Three topologies on the **same** job.
+A tiny in-memory runtime. No LLM. No HTTP. Three topologies on the **same** job. The chapter names the motions as sequential, parallel, reviewer, and conditional. A coding feature earns fan-out only when the work splits; extract-draft-review of one module is still Chapter 5's loop in costume.
 
 The job: **classify**, two research workers (`research_web`, `research_docs`), then **write**.
 
