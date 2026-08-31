@@ -23,7 +23,7 @@ python ch06/frameworks/adk.py
 python frameworks/verify.py
 ```
 
-`python -m pytest` still grades every chapter's stdlib homework. With the framework extra installed it also runs every port as a script (including under Windows cp1252) plus `frameworks/verify.py`.
+`python -m pytest` still grades every chapter's stdlib homework. With the framework extra installed it also runs every port as a script (including under Windows cp1252) plus `frameworks/verify.py`. GitHub Actions on `main` runs both jobs.
 
 ## Honesty notes (do not costume)
 

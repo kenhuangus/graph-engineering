@@ -4,6 +4,8 @@ Companion homework for **Graph Engineering** by Ken Huang.
 
 Canonical repo: https://github.com/kenhuangus/graph-engineering (public; owner `kenhuangus`).
 
+[![CI](https://github.com/kenhuangus/graph-engineering/actions/workflows/ci.yml/badge.svg)](https://github.com/kenhuangus/graph-engineering/actions/workflows/ci.yml)
+
 These are **reference solutions**. Attempt the assignment in each chapter's `homework.md` before reading `src/`. The tests are the grader: they assert observable behavior, not imports.
 
 ## How to run
@@ -40,6 +42,8 @@ python frameworks/verify.py
 ```
 
 See `frameworks/README.md`. No paid API keys: ADK function nodes, a local OpenAI `Model` subclass, CrewAI `BaseLLM`, and LangGraph `compile().invoke()` all run offline. Claude `query()` needs Claude CLI; the port type-checks live `ClaudeAgentOptions` then runs the chapter tool.
+
+CI on `main` grades the stdlib homework on Python 3.12/3.13 (Linux and Windows) and, in a second job, installs the five SDKs and re-runs the suite including `frameworks/verify.py`.
 
 ## Chapter index
 

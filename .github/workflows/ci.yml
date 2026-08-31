@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CREWAI_TRACING_ENABLED: "false"
+  CREWAI_DISABLE_TRACKING: "true"
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  homework:
+    name: homework (stdlib)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install homework deps
+        run: python -m pip install -r requirements.txt
+      - name: Grade every chapter
+        run: python -m pytest
+
+  frameworks:
+    name: live SDK ports
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-frameworks.txt
+      - name: Install homework and framework SDKs
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install -r requirements-frameworks.txt
+      - name: Verify 70 live SDK ports
+        run: python -m pytest
