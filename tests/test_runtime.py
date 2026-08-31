@@ -7,12 +7,18 @@ import pytest
 
 from runtime import _call_tool
 
+def _sdks_installed() -> bool:
+    for name in ("langgraph", "agents", "claude_agent_sdk", "crewai", "google.adk"):
+        try:
+            if importlib.util.find_spec(name) is None:
+                return False
+        except ModuleNotFoundError:
+            return False
+    return True
+
+
 pytestmark = pytest.mark.skipif(
-    importlib.util.find_spec("langgraph") is None
-    or importlib.util.find_spec("google.adk") is None
-    or importlib.util.find_spec("agents") is None
-    or importlib.util.find_spec("claude_agent_sdk") is None
-    or importlib.util.find_spec("crewai") is None,
+    not _sdks_installed(),
     reason="pip install -r requirements-frameworks.txt",
 )
 

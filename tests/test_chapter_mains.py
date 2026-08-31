@@ -15,10 +15,18 @@ FRAMEWORK_PORTS = {"adk.py", "openai_agents.py", "anthropic_agents.py", "langgra
 
 
 def _sdks_installed() -> bool:
-    return all(
-        importlib.util.find_spec(name)
-        for name in ("google.adk", "agents", "claude_agent_sdk", "langgraph", "crewai")
-    )
+    """True when all five vendor packages import. Dotted names must not raise.
+
+    ``find_spec('google.adk')`` imports the parent ``google`` package. On a
+    stdlib-only install that is ``ModuleNotFoundError``, not ``None``.
+    """
+    for name in ("langgraph", "agents", "claude_agent_sdk", "crewai", "google.adk"):
+        try:
+            if importlib.util.find_spec(name) is None:
+                return False
+        except ModuleNotFoundError:
+            return False
+    return True
 
 
 def _scripts() -> list[Path]:
