@@ -5,9 +5,8 @@ Same job on sequential_path, supervisor_star, and fanout_join.
 Topology: classify → research_web → research_docs → write
 Compiled StateGraph. Nodes are functions; the SDK owns the edges.
 
-Live: `pip install langgraph` then swap the fallback StateGraph for
-`from langgraph.graph import StateGraph, START, END`.
-No API key is required for this deterministic port.
+This file imports langgraph.graph.StateGraph / START / END.
+compile().invoke() runs locally; no API key.
 """
 from __future__ import annotations
 
@@ -15,11 +14,13 @@ import sys
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[2]
+_HERE = Path(__file__).resolve().parent
+sys.path[:] = [p for p in sys.path if Path(p).resolve() != _HERE]
 sys.path.insert(0, str(_ROOT / "ch06" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from pattern_runtime import fanout_join, make_job, sequential_path, supervisor_star
-from runtime import END, START, StateGraph
+from langgraph.graph import END, START, StateGraph
 
 
 def build():

@@ -6,7 +6,7 @@ G_K is a tool, not a Workflow. One memory-query node on G_A. execute() is TypeEr
 
 Live: `pip install google-adk` and
 `from google.adk import LlmAgent, Workflow` (2.0 Workflow Runtime, GA 19 May 2026).
-This file runs the same topology with local stand-ins: no Gemini key.
+This file imports google.adk.Workflow. Function nodes run offline via InMemoryRunner; no Gemini key.
 """
 from __future__ import annotations
 
@@ -14,22 +14,22 @@ import sys
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[2]
+_HERE = Path(__file__).resolve().parent
+sys.path[:] = [p for p in sys.path if Path(p).resolve() != _HERE]
 sys.path.insert(0, str(_ROOT / "ch08" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from triple_store import TripleStore
-from runtime import LlmAgent, SequentialAgent
+from google.adk import Workflow
+from runtime import chapter_node, run_adk
 
 
 def build():
-    worker = LlmAgent(
-        name="ch08_worker",
-        model="stub",
-        instruction="Ingest typed triples, query, walk neighbors, refuse execute().",
-        tools=[run],
-        mode="single_turn",
+    return Workflow(
+        name="ch08_adk",
+        description="G_K is a tool, not a Workflow. One memory-query node on G_A. execute() is TypeError.",
+        edges=[("START", chapter_node(run))],
     )
-    return SequentialAgent(name="ch08_adk", sub_agents=[worker], description="G_K is a tool, not a Workflow. One memory-query node on G_A. execute() is TypeError.")
 
 
 def run(records=None):
@@ -48,4 +48,4 @@ def run(records=None):
 
 
 if __name__ == "__main__":
-    print(build().run(None))
+    print(run_adk(build()))

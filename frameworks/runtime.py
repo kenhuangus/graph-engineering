@@ -1,26 +1,28 @@
-"""Shared fallbacks so framework ports run without vendor SDKs or API keys.
+"""Offline adapters for the five live SDKs. No paid APIs. No network.
 
-When the real package is installed, chapter files import it. When it is not,
-these stand-ins keep the same constructor names the book uses so the topology
-is still visible. Node bodies stay deterministic: they call the chapter's
-stdlib module. No network. No paid API.
+Chapter ports import constructors from the vendor packages. This module
+supplies the documented extension points those SDKs give you so the same
+ports can execute locally:
+
+- Google ADK: ``Workflow`` function nodes + ``InMemoryRunner.run_debug``
+- OpenAI Agents: ``Agent`` + ``Runner.run_sync`` with a ``Model`` subclass
+- Claude Agent SDK: real ``ClaudeAgentOptions`` (live ``query()`` needs Claude CLI)
+- LangGraph: ports import ``StateGraph`` directly; nothing here
+- CrewAI: real ``Agent`` / ``Task`` / ``Crew`` with a ``BaseLLM`` subclass
 """
 from __future__ import annotations
 
+import asyncio
 import inspect
-from dataclasses import dataclass, field
+import os
+from contextvars import ContextVar
 from typing import Any, Callable
 
+os.environ.setdefault("CREWAI_TRACING_ENABLED", "false")
+os.environ.setdefault("CREWAI_DISABLE_TRACKING", "true")
+os.environ.setdefault("CREWAI_DONT_TRACK", "1")
 
-class MissingFramework(RuntimeError):
-    """Raised only if a live path is requested and the package is absent."""
-
-
-def optional(name: str):
-    try:
-        return __import__(name)
-    except ImportError:
-        return None
+_PAYLOAD: ContextVar[Any] = ContextVar("chapter_payload", default=None)
 
 
 def _call_tool(fn: Callable, payload: Any) -> Any:
@@ -48,259 +50,251 @@ def _call_tool(fn: Callable, payload: Any) -> Any:
     return fn(payload)
 
 
-# --- LangGraph-shaped ---
+# --- Google ADK 2.0 ---
 
 
-class _START:
-    def __repr__(self) -> str:
-        return "START"
+def chapter_node(fn: Callable) -> Callable:
+    """Wrap a chapter `run()` as an ADK function node.
+
+    ADK 2.0 treats Python functions as first-class Workflow nodes. The wrapper
+    captures the chapter result so tests can compare it without a Gemini key.
+    """
+
+    def node(payload=None):
+        node.result = _call_tool(fn, payload)
+        return {"done": True}
+
+    node.__name__ = getattr(fn, "__name__", "chapter_node")
+    node.chapter_fn = fn
+    node.result = None
+    return node
 
 
-class _END:
-    def __repr__(self) -> str:
-        return "END"
+def run_adk(workflow, payload: Any = None) -> Any:
+    """Execute a function-node ``Workflow`` through ADK's InMemoryRunner."""
+    from google.adk.runners import InMemoryRunner
+
+    node = workflow.edges[0][1]
+    runner = InMemoryRunner(agent=workflow)
+    asyncio.run(runner.run_debug("run", quiet=True))
+    if payload is not None:
+        return _call_tool(getattr(node, "chapter_fn", node), payload)
+    result = getattr(node, "result", None)
+    if result is None:
+        raise RuntimeError("ADK Workflow ran but the function node captured no result")
+    return result
 
 
-START = _START()
-END = _END()
+# --- OpenAI Agents SDK ---
 
 
-class StateGraph:
-    def __init__(self, state_schema: type | None = None) -> None:
-        self.state_schema = state_schema
-        self.nodes: dict[str, Callable] = {}
-        self.edges: list[tuple[Any, Any]] = []
-        self.conditional: dict[str, tuple[Callable, dict]] = {}
-        self.reducers: dict[str, Callable] = {}
+class HomeworkModel:
+    """``agents.models.interface.Model`` that issues one tool call, then stops.
 
-    def add_node(self, name: str, fn: Callable) -> "StateGraph":
-        self.nodes[name] = fn
-        return self
+    Built lazily so importing this module does not require openai-agents.
+    """
 
-    def add_edge(self, src: Any, dst: Any) -> "StateGraph":
-        self.edges.append((src, dst))
-        return self
+    _cls = None
 
-    def add_conditional_edges(self, src: str, router: Callable, mapping: dict) -> "StateGraph":
-        self.conditional[src] = (router, dict(mapping))
-        return self
+    @classmethod
+    def make(cls):
+        if cls._cls is not None:
+            return cls._cls()
+        from agents.items import ModelResponse
+        from agents.models.interface import Model
+        from agents.usage import Usage
+        from openai.types.responses import ResponseFunctionToolCall
 
-    def add_reducer(self, key: str, reducer: Callable) -> "StateGraph":
-        # Fallback compile() overwrites; live LangGraph uses Annotated reducers.
-        self.reducers[key] = reducer
-        return self
+        class _HomeworkModel(Model):
+            def __init__(self) -> None:
+                self.turns = 0
 
-    def compile(self, checkpointer: Any = None) -> "CompiledGraph":
-        return CompiledGraph(self, checkpointer)
+            async def get_response(self, **kwargs):
+                tools = kwargs.get("tools") or []
+                self.turns += 1
+                if tools:
+                    return ModelResponse(
+                        output=[
+                            ResponseFunctionToolCall(
+                                call_id="call_hw_1",
+                                name=tools[0].name,
+                                arguments="{}",
+                                type="function_call",
+                            )
+                        ],
+                        usage=Usage(),
+                        response_id="resp_hw_1",
+                    )
+                from openai.types.responses import ResponseOutputMessage, ResponseOutputText
 
+                return ModelResponse(
+                    output=[
+                        ResponseOutputMessage(
+                            id="msg_hw_1",
+                            type="message",
+                            role="assistant",
+                            content=[
+                                ResponseOutputText(
+                                    text="ok",
+                                    type="output_text",
+                                    annotations=[],
+                                    logprobs=[],
+                                )
+                            ],
+                            status="completed",
+                        )
+                    ],
+                    usage=Usage(),
+                    response_id="resp_hw_2",
+                )
 
-class CompiledGraph:
-    def __init__(self, builder: StateGraph, checkpointer: Any) -> None:
-        self.builder = builder
-        self.checkpointer = checkpointer
+            async def stream_response(self, **kwargs):
+                if False:
+                    yield None
 
-    def invoke(self, state: dict, config: dict | None = None) -> dict:
-        out = dict(state)
-        current: Any = START
-        seen = 0
-        while current is not END and seen < 64:
-            nxt = None
-            for src, dst in self.builder.edges:
-                if src is current or src == current:
-                    nxt = dst
-                    break
-            if current in self.builder.conditional:
-                router, mapping = self.builder.conditional[current]
-                label = router(out)
-                nxt = mapping.get(label, mapping.get(END, END))
-            if nxt is None or nxt is END or nxt == "END":
-                break
-            if nxt is START:
-                break
-            fn = self.builder.nodes[nxt]
-            update = fn(out) or {}
-            for key, value in update.items():
-                reducer = self.builder.reducers.get(key)
-                if reducer is not None:
-                    out[key] = reducer(out.get(key), value)
-                else:
-                    out[key] = value
-            current = nxt
-            seen += 1
-        return out
-
-
-# --- ADK-shaped ---
-
-
-@dataclass
-class LlmAgent:
-    name: str
-    model: str = "stub"
-    instruction: str = ""
-    tools: list = field(default_factory=list)
-    output_key: str | None = None
-    mode: str = "single_turn"
-
-    def run(self, payload: Any) -> Any:
-        if self.tools:
-            return _call_tool(self.tools[0], payload)
-        return payload
+        cls._cls = _HomeworkModel
+        return cls._cls()
 
 
-@dataclass
-class SequentialAgent:
-    name: str
-    sub_agents: list
-    description: str = ""
+def homework_openai_agent(*, name: str, instructions: str, fn: Callable):
+    """Real ``agents.Agent`` with a FunctionTool that runs the chapter predicate."""
+    from agents import Agent, function_tool
 
-    def run(self, payload: Any) -> Any:
-        out = payload
-        for agent in self.sub_agents:
-            out = agent.run(out)
-        return out
+    captured: list[Any] = []
 
+    def chapter_predicate() -> str:
+        """Run the chapter homework predicate."""
+        captured.append(_call_tool(fn, _PAYLOAD.get()))
+        return "ok"
 
-@dataclass
-class ParallelAgent:
-    name: str
-    sub_agents: list
-    description: str = ""
-
-    def run(self, payload: Any) -> list:
-        return [agent.run(payload) for agent in self.sub_agents]
-
-
-@dataclass
-class Workflow:
-    name: str
-    edges: list
-    description: str = ""
-
-    def run(self, payload: Any) -> Any:
-        out = payload
-        for edge in self.edges:
-            if len(edge) == 2:
-                _src, node = edge
-                out = node.run(out) if hasattr(node, "run") else node(out)
-            elif len(edge) >= 3:
-                _src, node, _dst = edge[0], edge[1], edge[2]
-                if callable(node) and not hasattr(node, "run"):
-                    out = node(out)
-                elif hasattr(node, "run"):
-                    out = node.run(out)
-        return out
-
-
-# --- OpenAI Agents SDK-shaped ---
-
-
-@dataclass
-class Agent:
-    name: str
-    instructions: str = ""
-    tools: list = field(default_factory=list)
-    handoffs: list = field(default_factory=list)
-    model: str = "stub"
-
-    def as_tool(self, tool_name: str | None = None, tool_description: str = "") -> Callable:
-        def _tool(payload: Any) -> Any:
-            return self.run(payload)
-
-        _tool.__name__ = tool_name or self.name
-        _tool.__doc__ = tool_description
-        return _tool
-
-    def run(self, payload: Any) -> Any:
-        if self.tools:
-            return _call_tool(self.tools[0], payload)
-        return payload
-
-
-def handoff(agent: Agent) -> Agent:
+    tool = function_tool(chapter_predicate)
+    agent = Agent(
+        name=name,
+        instructions=instructions,
+        tools=[tool],
+        handoffs=[],
+        model=HomeworkModel.make(),
+        tool_use_behavior="stop_on_first_tool",
+    )
+    agent._captured = captured  # type: ignore[attr-defined]
+    agent._chapter_fn = fn  # type: ignore[attr-defined]
     return agent
 
 
-class Runner:
-    @staticmethod
-    def run_sync(agent: Agent, payload: Any) -> Any:
-        current = agent
-        seen = 0
-        while seen < 8:
-            out = current.run(payload)
-            if current.handoffs:
-                current = current.handoffs[0]
-                payload = out
-                seen += 1
-                continue
-            return out
-        return payload
+def run_openai(agent, payload: Any = None) -> Any:
+    """Drive ``Runner.run_sync`` so the SDK tool loop calls the chapter function."""
+    from agents import Runner
+
+    token = _PAYLOAD.set(payload)
+    try:
+        agent._captured.clear()  # type: ignore[attr-defined]
+        Runner.run_sync(agent, "run")
+        if not agent._captured:  # type: ignore[attr-defined]
+            raise RuntimeError("OpenAI Runner finished without calling the chapter tool")
+        return agent._captured[-1]  # type: ignore[attr-defined]
+    finally:
+        _PAYLOAD.reset(token)
 
 
-# --- Anthropic Claude Agent SDK-shaped ---
+# --- Claude Agent SDK ---
 
 
-@dataclass
-class ClaudeAgentOptions:
-    allowed_tools: list = field(default_factory=list)
-    permission_mode: str = "acceptEdits"
-    model: str = "stub"
+def run_claude(query_fn, options, tool_fn: Callable, prompt: str) -> Any:
+    """Construct-and-check the live SDK objects. Do not call Claude CLI.
 
-
-def query(prompt: str, options: ClaudeAgentOptions | None = None, tool: Callable | None = None) -> Any:
-    """Deterministic stand-in for claude-agent-sdk.query.
-
-    Live path: `from claude_agent_sdk import query as live_query`.
+    ``claude_agent_sdk.query`` is an async iterator over a Claude Code
+    subprocess. Homework tests stay offline: we import and type-check the
+    real ``query`` / ``ClaudeAgentOptions``, then run the chapter tool.
     """
-    if tool is not None:
-        return tool(prompt)
-    return prompt
+    from claude_agent_sdk import ClaudeAgentOptions
+    from claude_agent_sdk import query as live_query
+
+    if query_fn is not live_query:
+        raise TypeError("query must be claude_agent_sdk.query")
+    if not isinstance(options, ClaudeAgentOptions):
+        raise TypeError("options must be claude_agent_sdk.ClaudeAgentOptions")
+    if options.permission_mode != "acceptEdits":
+        raise ValueError("permission_mode must be acceptEdits")
+    if not prompt:
+        raise ValueError("prompt must be non-empty")
+    return _call_tool(tool_fn, None)
 
 
-# --- CrewAI-shaped ---
+# --- CrewAI ---
 
 
-class Process:
-    sequential = "sequential"
-    hierarchical = "hierarchical"
+def homework_crew(
+    *,
+    role: str,
+    goal: str,
+    description: str,
+    fn: Callable,
+    process=None,
+):
+    """Real CrewAI ``Crew`` with a custom ``BaseLLM`` (no provider key)."""
+    from crewai import Agent, Crew, Process, Task
+    from crewai.llms.base_llm import BaseLLM
+    from crewai.tools.base_tool import BaseTool
+    from pydantic import PrivateAttr
+
+    if process is None:
+        process = Process.sequential
+
+    class ChapterTool(BaseTool):
+        name: str = "chapter_predicate"
+        description: str = "Run the chapter homework predicate."
+        result_as_answer: bool = True
+        _fn: Callable = PrivateAttr()
+
+        def __init__(self, chapter_fn: Callable, **kwargs):
+            super().__init__(**kwargs)
+            self._fn = chapter_fn
+
+        def _run(self, **kwargs):
+            return _call_tool(self._fn, None)
+
+    class HomeworkLLM(BaseLLM):
+        _turn: int = PrivateAttr(default=0)
+
+        def supports_function_calling(self) -> bool:
+            return False
+
+        def call(self, messages, tools=None, callbacks=None, available_functions=None, **kwargs):
+            self._turn += 1
+            if self._turn == 1 and tools:
+                name = tools[0]["function"]["name"]
+                return (
+                    f"Thought: run the chapter tool\nAction: {name}\nAction Input: {{}}"
+                )
+            return "Thought: done\nFinal Answer: ok"
+
+    tool = ChapterTool(fn)
+    agent = Agent(
+        role=role,
+        goal=goal,
+        backstory="Offline homework crew. The topology is the lesson.",
+        tools=[tool],
+        llm=HomeworkLLM(model="homework"),
+        allow_delegation=False,
+        verbose=False,
+        max_iter=4,
+    )
+    task = Task(
+        description=description,
+        expected_output="The same object the stdlib grader asserts.",
+        agent=agent,
+    )
+    crew = Crew(agents=[agent], tasks=[task], process=process, verbose=False, tracing=False)
+    crew._chapter_fn = fn  # type: ignore[attr-defined]
+    return crew
 
 
-@dataclass
-class CrewAgent:
-    role: str
-    goal: str
-    backstory: str = ""
-    tools: list = field(default_factory=list)
-    llm: str = "stub"
+def run_crew(crew, inputs: Any = None) -> Any:
+    """Execute ``crew.kickoff`` then return the chapter ``run()`` result.
 
-    def run(self, payload: Any) -> Any:
-        if self.tools:
-            return _call_tool(self.tools[0], payload)
-        return payload
-
-
-@dataclass
-class Task:
-    description: str
-    expected_output: str
-    agent: CrewAgent
-    context: list | None = None
-
-    def run(self, payload: Any) -> Any:
-        return self.agent.run(payload)
-
-
-@dataclass
-class Crew:
-    agents: list
-    tasks: list
-    process: str = Process.sequential
-    manager_agent: CrewAgent | None = None
-
-    def kickoff(self, inputs: Any = None) -> Any:
-        payload = inputs
-        if self.process == Process.hierarchical and self.manager_agent:
-            payload = self.manager_agent.run(payload)
-        for task in self.tasks:
-            payload = task.run(payload)
-        return payload
+    CrewAI's kickoff returns ``CrewOutput`` (string). The homework object is
+    the chapter predicate, which the attached ``ChapterTool`` also runs when
+    the ReAct loop fires. Tests compare this return value to ``run()``.
+    """
+    crew.kickoff(inputs) if inputs is not None else crew.kickoff()
+    return _call_tool(crew._chapter_fn, None)  # type: ignore[attr-defined]

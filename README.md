@@ -31,14 +31,15 @@ Constraints for every chapter: Python 3.12+, pytest, stdlib only (numpy is not r
 
 ## Framework ports
 
-Each chapter also ships five vendor-shaped implementations under `chNN/frameworks/`: Google ADK 2.0, OpenAI Agents SDK, Anthropic Claude Agent SDK, LangGraph, and CrewAI. They call the same stdlib module the grader uses. No API key. `python -m pytest` now also runs every listing and port as a script (including under Windows cp1252) plus `frameworks/verify.py`.
+Each chapter also ships five implementations under `chNN/frameworks/` that import the live vendor SDKs: Google ADK 2.0 (`google.adk.Workflow`), OpenAI Agents SDK (`agents.Agent` / `Runner`), Anthropic Claude Agent SDK (`claude_agent_sdk.query` / `ClaudeAgentOptions`), LangGraph (`langgraph.graph.StateGraph`), and CrewAI (`crewai.Crew` / `Process`). Node bodies still call the chapter stdlib module. Default homework tests stay stdlib-only. To execute the ports:
 
 ```bash
+pip install -r requirements-frameworks.txt
 python ch04/frameworks/langgraph.py
 python frameworks/verify.py
 ```
 
-See `frameworks/README.md`. Live SDKs are optional (`requirements-frameworks.txt`).
+See `frameworks/README.md`. No paid API keys: ADK function nodes, a local OpenAI `Model` subclass, CrewAI `BaseLLM`, and LangGraph `compile().invoke()` all run offline. Claude `query()` needs Claude CLI; the port type-checks live `ClaudeAgentOptions` then runs the chapter tool.
 
 ## Chapter index
 

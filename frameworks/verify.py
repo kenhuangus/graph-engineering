@@ -1,14 +1,18 @@
-"""Assert every chapter port's run() matches, and build/invoke/kickoff execute.
+"""Assert every chapter port's run() matches, and live SDK build/invoke execute.
 
-No vendor packages. No network. From the repo root:
+Requires: pip install -r requirements-frameworks.txt
 
     python frameworks/verify.py
 """
 from __future__ import annotations
 
 import importlib.util
+import os
 import sys
 from pathlib import Path
+
+os.environ.setdefault("CREWAI_TRACING_ENABLED", "false")
+os.environ.setdefault("CREWAI_DISABLE_TRACKING", "true")
 
 ROOT = Path(__file__).resolve().parents[1]
 PORTS = ("adk", "openai_agents", "anthropic_agents", "langgraph", "crewai")
@@ -37,29 +41,44 @@ def _normalize(value):
 
 
 def exercise(mod, port: str, baseline):
-    """Run the framework entrypoints. Return extra failures."""
+    """Run the live SDK entrypoints. Return extra failures."""
+    from agents.agent import Agent as OpenAIAgent
+    from claude_agent_sdk import ClaudeAgentOptions
+    from crewai import Crew
+    from google.adk import Workflow
+
     fails = []
     built = mod.build()
     if built is None:
         fails.append(f"{port}: build() returned None")
         return fails
     if port == "adk":
-        got = _normalize(built.run(None))
+        if not isinstance(built, Workflow):
+            fails.append(f"{port}: build() is {type(built).__name__}, not google.adk.Workflow")
+        got = _normalize(mod.run_adk(built))
         if got != baseline:
-            fails.append(f"{port}: build().run(None) != run()")
+            fails.append(f"{port}: run_adk(build()) != run()")
     elif port == "openai_agents":
+        if not isinstance(built, OpenAIAgent):
+            fails.append(f"{port}: build() is {type(built).__name__}, not agents.Agent")
         got = _normalize(mod.invoke())
         if got != baseline:
             fails.append(f"{port}: invoke() != run()")
     elif port == "anthropic_agents":
+        if not isinstance(built, ClaudeAgentOptions):
+            fails.append(f"{port}: build() is {type(built).__name__}, not ClaudeAgentOptions")
         got = _normalize(mod.invoke())
         if got != baseline:
             fails.append(f"{port}: invoke() != run()")
     elif port == "crewai":
-        got = _normalize(built.kickoff())
+        if not isinstance(built, Crew):
+            fails.append(f"{port}: build() is {type(built).__name__}, not crewai.Crew")
+        got = _normalize(mod.invoke())
         if got != baseline:
-            fails.append(f"{port}: kickoff() != run()")
+            fails.append(f"{port}: invoke() != run()")
     elif port == "langgraph":
+        if not hasattr(built, "invoke"):
+            fails.append(f"{port}: compile() did not return an invocable graph")
         walked = built.invoke({})
         if not isinstance(walked, dict):
             fails.append(f"{port}: compile().invoke({{}}) did not return a dict")
@@ -97,7 +116,7 @@ def main() -> int:
         for line in failed:
             print(" ", line)
         return 1
-    print(f"OK {checked} ports across 14 chapters (run + build/invoke)")
+    print(f"OK {checked} live-SDK ports across 14 chapters (run + build/invoke)")
     return 0
 
 

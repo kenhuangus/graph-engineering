@@ -6,7 +6,7 @@ query() per node, Python owns the review back-edge budget. Sessions are not a ch
 
 Live: `pip install claude-agent-sdk` then
 `from claude_agent_sdk import query, ClaudeAgentOptions`.
-This port uses a local query() stand-in. No Anthropic key.
+This file imports claude_agent_sdk.query / ClaudeAgentOptions. Live query() needs Claude CLI; homework invoke() type-checks the SDK objects then runs the chapter tool.
 The Agent SDK runs Claude Code's tool loop; the Messages API is a different package.
 """
 from __future__ import annotations
@@ -15,15 +15,18 @@ import sys
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[2]
+_HERE = Path(__file__).resolve().parent
+sys.path[:] = [p for p in sys.path if Path(p).resolve() != _HERE]
 sys.path.insert(0, str(_ROOT / "ch07" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 import mini_stategraph as mini
-from runtime import ClaudeAgentOptions, query
+from claude_agent_sdk import ClaudeAgentOptions, query
+from runtime import run_claude
 
 
 def build():
-    return ClaudeAgentOptions(allowed_tools=["mini_stategraph"], permission_mode="acceptEdits", model="stub")
+    return ClaudeAgentOptions(allowed_tools=["mini_stategraph"], permission_mode="acceptEdits")
 
 
 def run(topic="loops vs graphs"):
@@ -49,7 +52,7 @@ def run(topic="loops vs graphs"):
 
 
 def invoke(prompt: str = "Classify → research → write → review with a guarded back-edge."):
-    return query(prompt, options=build(), tool=lambda _p: run())
+    return run_claude(query, build(), run, prompt)
 
 
 if __name__ == "__main__":

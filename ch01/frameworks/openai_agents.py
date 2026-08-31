@@ -6,7 +6,7 @@ One Agent with a tool that builds the graph. No handoff: there is no specialist 
 
 Live: `pip install openai-agents` then
 `from agents import Agent, Runner, handoff`.
-This port uses a local Agent/Runner stand-in. No OpenAI key.
+This file imports agents.Agent / Runner. A local Model subclass drives the tool loop; no OpenAI key.
 """
 from __future__ import annotations
 
@@ -14,19 +14,22 @@ import sys
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[2]
+_HERE = Path(__file__).resolve().parent
+sys.path[:] = [p for p in sys.path if Path(p).resolve() != _HERE]
 sys.path.insert(0, str(_ROOT / "ch01" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from naming_graph import Event, build_naming_graph, week_fixture
-from runtime import Agent, Runner
+from agents import Agent, Runner, handoff
+from runtime import homework_openai_agent, run_openai
 
 
 def build():
-    return Agent(
+    _ = (Agent, Runner, handoff)
+    return homework_openai_agent(
         name="ch01_agent",
         instructions="Reconstruct a directed naming graph from speech-act events.",
-        tools=[run],
-        handoffs=[],
+        fn=run,
     )
 
 
@@ -36,7 +39,7 @@ def run(events=None):
 
 
 def invoke(payload=None):
-    return Runner.run_sync(build(), payload)
+    return run_openai(build(), payload)
 
 
 if __name__ == "__main__":

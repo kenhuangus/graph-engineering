@@ -5,9 +5,8 @@ Reconstruct a directed naming graph from speech-act events.
 Topology: ingest → emit_edges → report
 Compiled StateGraph. Nodes are functions; the SDK owns the edges.
 
-Live: `pip install langgraph` then swap the fallback StateGraph for
-`from langgraph.graph import StateGraph, START, END`.
-No API key is required for this deterministic port.
+This file imports langgraph.graph.StateGraph / START / END.
+compile().invoke() runs locally; no API key.
 """
 from __future__ import annotations
 
@@ -15,11 +14,13 @@ import sys
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[2]
+_HERE = Path(__file__).resolve().parent
+sys.path[:] = [p for p in sys.path if Path(p).resolve() != _HERE]
 sys.path.insert(0, str(_ROOT / "ch01" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from naming_graph import Event, build_naming_graph, week_fixture
-from runtime import END, START, StateGraph
+from langgraph.graph import END, START, StateGraph
 
 
 def build():

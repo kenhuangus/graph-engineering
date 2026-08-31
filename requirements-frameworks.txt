@@ -1,7 +1,7 @@
-# Optional. Default homework is stdlib + pytest only (see requirements.txt).
-# Install these only if you want to swap a chapter port onto the live SDK.
-google-adk
-openai-agents
-claude-agent-sdk
+# Required to import and execute chNN/frameworks/*.py.
+# Default homework (chNN/tests, requirements.txt) stays stdlib + pytest only.
+google-adk>=2.4.0
+openai-agents>=0.20.0
+claude-agent-sdk>=0.2.148
 langgraph
-crewai
+crewai>=1.15.18

@@ -6,7 +6,7 @@ A diamond is Sequential + Parallel wrappers, or a Workflow with a join. A back-e
 
 Live: `pip install google-adk` and
 `from google.adk import LlmAgent, Workflow` (2.0 Workflow Runtime, GA 19 May 2026).
-This file runs the same topology with local stand-ins: no Gemini key.
+This file imports google.adk.Workflow. Function nodes run offline via InMemoryRunner; no Gemini key.
 """
 from __future__ import annotations
 
@@ -14,22 +14,22 @@ import sys
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[2]
+_HERE = Path(__file__).resolve().parent
+sys.path[:] = [p for p in sys.path if Path(p).resolve() != _HERE]
 sys.path.insert(0, str(_ROOT / "ch10" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from kahn import has_cycle, ready_set, topological_sort
-from runtime import LlmAgent, SequentialAgent
+from google.adk import Workflow
+from runtime import chapter_node, run_adk
 
 
 def build():
-    worker = LlmAgent(
-        name="ch10_worker",
-        model="stub",
-        instruction="Kahn topological sort, cycle detection, ready-set on a diamond.",
-        tools=[run],
-        mode="single_turn",
+    return Workflow(
+        name="ch10_adk",
+        description="A diamond is Sequential + Parallel wrappers, or a Workflow with a join. A back-edge is not a DAG.",
+        edges=[("START", chapter_node(run))],
     )
-    return SequentialAgent(name="ch10_adk", sub_agents=[worker], description="A diamond is Sequential + Parallel wrappers, or a Workflow with a join. A back-edge is not a DAG.")
 
 
 def run():
@@ -44,4 +44,4 @@ def run():
 
 
 if __name__ == "__main__":
-    print(build().run(None))
+    print(run_adk(build()))

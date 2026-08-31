@@ -6,7 +6,7 @@ One agent, one task. A crew of three 'G_A / G_K / trace' voters is a costume.
 
 Live: `pip install crewai` then
 `from crewai import Agent, Task, Crew, Process`.
-This port uses local Crew/Task stand-ins. No provider key.
+This file imports crewai.Agent / Task / Crew / Process. A BaseLLM subclass drives kickoff() offline; no provider key.
 CrewAI Process is sequential | hierarchical only — no third "consensual" process.
 """
 from __future__ import annotations
@@ -15,26 +15,24 @@ import sys
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[2]
+_HERE = Path(__file__).resolve().parent
+sys.path[:] = [p for p in sys.path if Path(p).resolve() != _HERE]
 sys.path.insert(0, str(_ROOT / "ch02" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from graph_kinds import GraphObject, classify
-from runtime import Crew, CrewAgent, Process, Task
+from crewai import Agent, Crew, Process, Task
+from runtime import homework_crew, run_crew
 
 
 def build():
-    agent = CrewAgent(
+    _ = (Agent, Task, Process)
+    return homework_crew(
         role="ch02 engineer",
         goal="Classify a GraphObject as G_A, G_K, or a run trace; refuse mash-ups.",
-        backstory="Deterministic stand-in. The topology is the lesson.",
-        tools=[run],
-    )
-    task = Task(
         description="Classify a GraphObject as G_A, G_K, or a run trace; refuse mash-ups.",
-        expected_output="The same object the stdlib grader asserts.",
-        agent=agent,
+        fn=run,
     )
-    return Crew(agents=[agent], tasks=[task], process=Process.sequential)
 
 
 def run(obj=None):
@@ -53,7 +51,7 @@ def run(obj=None):
 
 
 def invoke(inputs=None):
-    return build().kickoff(inputs)
+    return run_crew(build(), inputs)
 
 
 if __name__ == "__main__":

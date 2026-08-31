@@ -6,7 +6,7 @@ RetryConfig on the node. A Workflow does not replace idempotency keys.
 
 Live: `pip install google-adk` and
 `from google.adk import LlmAgent, Workflow` (2.0 Workflow Runtime, GA 19 May 2026).
-This file runs the same topology with local stand-ins: no Gemini key.
+This file imports google.adk.Workflow. Function nodes run offline via InMemoryRunner; no Gemini key.
 """
 from __future__ import annotations
 
@@ -14,22 +14,22 @@ import sys
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[2]
+_HERE = Path(__file__).resolve().parent
+sys.path[:] = [p for p in sys.path if Path(p).resolve() != _HERE]
 sys.path.insert(0, str(_ROOT / "ch09" / "src"))
 sys.path.insert(0, str(_ROOT / "frameworks"))
 
 from step_runner import CircuitOpenError, StepRunner
-from runtime import LlmAgent, SequentialAgent
+from google.adk import Workflow
+from runtime import chapter_node, run_adk
 
 
 def build():
-    worker = LlmAgent(
-        name="ch09_worker",
-        model="stub",
-        instruction="Step runner: retry + jitter, idempotency, circuit breaker.",
-        tools=[run],
-        mode="single_turn",
+    return Workflow(
+        name="ch09_adk",
+        description="RetryConfig on the node. A Workflow does not replace idempotency keys.",
+        edges=[("START", chapter_node(run))],
     )
-    return SequentialAgent(name="ch09_adk", sub_agents=[worker], description="RetryConfig on the node. A Workflow does not replace idempotency keys.")
 
 
 def run():
@@ -48,4 +48,4 @@ def run():
 
 
 if __name__ == "__main__":
-    print(build().run(None))
+    print(run_adk(build()))

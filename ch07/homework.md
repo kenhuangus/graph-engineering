@@ -1,6 +1,6 @@
 # Chapter 7 — Frameworks You Can Ship On
 
-Build a **mini StateGraph**. No LangGraph. No HTTP. Dict state, registered nodes, edges, reducers, `compile()`, `invoke()`. The chapter's Claude Agent SDK section is the same comparison: `query()` plus tools is still a loop until you own the edges. The companion `frameworks/anthropic_agents.py` runs this assignment's job on that stand-in.
+Build a **mini StateGraph**. No LangGraph. No HTTP. Dict state, registered nodes, edges, reducers, `compile()`, `invoke()`. The chapter's Claude Agent SDK section is the same comparison: `query()` plus tools is still a loop until you own the edges. The companion `frameworks/anthropic_agents.py` runs this assignment's job on the live `claude-agent-sdk` constructors.
 
 ## What you implement
 
