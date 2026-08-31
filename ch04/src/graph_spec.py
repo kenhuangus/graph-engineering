@@ -42,10 +42,45 @@ class UnknownEdgeTypeError(GraphSpecError):
     """Raised when an edge.type is not in the allowed set."""
 
 
+class EvaluatorWriteLockError(GraphSpecError):
+    """Raised when an evaluator holds the write lock or a write tool."""
+
+
+class UncappedSendError(GraphSpecError):
+    """Raised when a dynamic Send edge has no send_cap on the source."""
+
+
+class MixedRoutingError(GraphSpecError):
+    """Raised when one node emits both a conditional map and a dynamic Send."""
+
+
+class HumanAfterSideEffectError(GraphSpecError):
+    """Raised when a human sits after an irreversible side-effect tool."""
+
+
+class OverwriteFanInError(GraphSpecError):
+    """Raised when a reducer overwrites a fan-in field."""
+
+
+class OpenRouteMapError(GraphSpecError):
+    """Raised when a model may mint a destination outside a closed map."""
+
+
+WRITE_TOOLS = frozenset(
+    {"issue_refund", "wire_payment", "apply_patch", "apply", "merge"}
+)
+SPEND_IDS = frozenset({"issue_refund", "apply", "apply_patch", "merge", "wire_payment"})
+
+
 @dataclass(frozen=True)
 class Node:
     id: str
     type: str  # agent | tool | evaluator | human
+    tools: tuple[str, ...] = ()
+    write_lock: bool = False
+    send_cap: int | None = None
+    destinations: tuple[str, ...] | None = None
+    mint_destination: bool = False
 
 
 @dataclass(frozen=True)
@@ -54,6 +89,7 @@ class Edge:
     dst: str
     type: str  # unconditional | conditional | dynamic
     guard: str | None = None
+    destinations: tuple[str, ...] | None = None
 
 
 @dataclass(frozen=True)
@@ -102,7 +138,60 @@ def validate_spec(spec: GraphSpec) -> GraphSpec:
             raise UnknownNodeError(f"edge destination {e.dst!r} is not a node")
 
     _reject_unguarded_cycles(spec, id_set)
+    _reject_anatomy(spec, {n.id: n for n in spec.nodes})
     return spec
+
+
+def _is_side_effect(node: Node) -> bool:
+    if node.write_lock:
+        return True
+    if node.id in SPEND_IDS:
+        return True
+    return bool(WRITE_TOOLS.intersection(node.tools))
+
+
+def _reject_anatomy(spec: GraphSpec, by_id: dict[str, Node]) -> None:
+    for n in spec.nodes:
+        if n.type == "evaluator" and (n.write_lock or WRITE_TOOLS.intersection(n.tools)):
+            raise EvaluatorWriteLockError(
+                f"evaluator {n.id!r} holds the write lock or a write tool"
+            )
+        if n.mint_destination:
+            raise OpenRouteMapError(
+                f"node {n.id!r} may mint a destination outside a closed map"
+            )
+
+    succ = _successors(spec)
+    for src, edges in succ.items():
+        kinds = {e.type for e in edges}
+        if "conditional" in kinds and "dynamic" in kinds:
+            raise MixedRoutingError(
+                f"node {src!r} mixes a conditional map with a dynamic Send"
+            )
+        src_node = by_id[src]
+        for e in edges:
+            if e.type == "dynamic" and not src_node.send_cap:
+                raise UncappedSendError(
+                    f"dynamic edge {e.src}->{e.dst} has no send_cap on {src!r}"
+                )
+            closed = e.destinations if e.destinations is not None else src_node.destinations
+            if e.type == "conditional" and closed is not None and e.dst not in closed:
+                raise OpenRouteMapError(
+                    f"edge {e.src}->{e.dst} is not in the closed map {closed!r}"
+                )
+            dst = by_id.get(e.dst)
+            if dst and dst.type == "human" and _is_side_effect(src_node):
+                raise HumanAfterSideEffectError(
+                    f"human {dst.id!r} sits after side-effect node {src!r}"
+                )
+
+    overwrite = {
+        k for k, v in spec.state.reducers.items() if v in {"overwrite", "replace", "last_write"}
+    }
+    if overwrite:
+        raise OverwriteFanInError(
+            f"reducer overwrites fan-in field(s): {sorted(overwrite)}"
+        )
 
 
 def _successors(spec: GraphSpec) -> dict[str, list[Edge]]:

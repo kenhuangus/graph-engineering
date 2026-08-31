@@ -23,8 +23,14 @@ Typed errors (subclasses of `GraphSpecError`):
 | `halt_node` not in the node set | `MissingHaltError` |
 | edge or interrupt names a node that does not exist | `UnknownNodeError` |
 | a directed cycle with no `guard` on any cycle edge **and** halt not on the cycle | `UnguardedCycleError` |
+| evaluator holds `write_lock` or a write tool (`issue_refund`, `apply`, …) | `EvaluatorWriteLockError` |
+| a `dynamic` Send edge whose source has no `send_cap` | `UncappedSendError` |
+| one node emits both a conditional map and a dynamic Send | `MixedRoutingError` |
+| a human sits after an irreversible side-effect tool | `HumanAfterSideEffectError` |
+| a reducer overwrites a fan-in field (`overwrite` / `replace` / `last_write`) | `OverwriteFanInError` |
+| a node may mint a destination outside a closed map | `OpenRouteMapError` |
 
-A cycle that includes a guarded back-edge (review → revise → review with `n < N`) is legal. A two-node ping-pong with unconditional edges and halt sitting *off* the cycle is not.
+A cycle that includes a guarded back-edge (review → revise → review with `n < N`) is legal. A two-node ping-pong with unconditional edges and halt sitting *off* the cycle is not. A reviewer that holds the write lock, a Send list with no cap, a mixed-routing node, a human after the side effect, an overwrite fan-in reducer, or a model allowed to mint a fifth destination is not.
 
 ## How to run
 

@@ -19,6 +19,8 @@ Rules the tests enforce:
 
 Do not emit reasons outside the closed set.
 
+The in-chapter listing `loop_vs_graph_bakeoff.py` is also in `src/`. It is not the assignment. It is the sequential status-paragraph bakeoff from the chapter.
+
 ## How to run
 
 ```bash

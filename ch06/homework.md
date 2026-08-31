@@ -26,6 +26,8 @@ Required behavior:
 
 Deterministic stand-in "workers" are fine (string formatting on `job.topic`). Do not `random.choice` a fake agent.
 
+The in-chapter listing `ch06_workers_messages.py` is also in `src/`. It is not the assignment. It is the claim-miner / skeptic / citation-scout message graph from the chapter.
+
 ## How to run
 
 ```bash

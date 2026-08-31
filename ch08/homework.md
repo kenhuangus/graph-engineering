@@ -13,6 +13,8 @@ Module: `triple_store.py`.
   - `neighbors(node, depth=1) -> set[str]` — undirected, depth 1 or 2, exclude the start node. Other depths raise `ValueError`.
   - `execute(*args, **kwargs)` — always raise `TypeError`. A knowledge graph does not run.
 
+The in-chapter listing `memory_graph_node.py` is also in `src/`. It is not the assignment. It is the SQLite doorway (SHACL shapes, bi-temporal edges, one memory-query node) from the chapter.
+
 ## How to run
 
 ```bash

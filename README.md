@@ -55,6 +55,9 @@ In-chapter listings are pedagogical programs. The graded homework is the smaller
 | Dir  | In-chapter listing (if named) | Graded module |
 |------|-------------------------------|---------------|
 | ch03 | five sibling layers | `five_layers.py` |
+| ch05 | `loop_vs_graph_bakeoff.py` | `napkin.py` |
+| ch06 | `ch06_workers_messages.py` | `pattern_runtime.py` |
+| ch08 | `memory_graph_node.py` | `triple_store.py` |
 | ch10 | `chapter10_three_machines.py` | `kahn.py` |
 | ch11 | `chapter11_authz_reachability.py` | `authz_graph.py` |
 
