@@ -1,4 +1,4 @@
-"""Chapter 13 — Testing, Evaluation, and Verification — LangGraph port.
+"""Chapter 13 — Testing, Evaluation, and Verification of Agent Graphs — LangGraph port.
 
 check_trace: halt, join, unconstrained spend.
 

@@ -1,4 +1,4 @@
-"""Chapter 12 — Graph Intelligence — OpenAI Agents SDK port.
+"""Chapter 12 — Graph Intelligence Is Not the Runtime — OpenAI Agents SDK port.
 
 One-layer message passing. This is G_L, not an agent graph.
 

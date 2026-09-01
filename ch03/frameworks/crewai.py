@@ -1,4 +1,4 @@
-"""Chapter 03 — Harness as Paradigm — Siblings, Not a Ladder — CrewAI port.
+"""Chapter 03 — The Graph Under the Harness — CrewAI port.
 
 Score a structured system against prompt / context / loop / graph / memory.
 

@@ -1,4 +1,4 @@
-"""Chapter 10 — The Computer Science Behind Graph Engineering — OpenAI Agents SDK port.
+"""Chapter 10 — The Computer Science of Agent Graphs — OpenAI Agents SDK port.
 
 Kahn topological sort, cycle detection, ready-set on a diamond.
 

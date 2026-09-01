@@ -1,4 +1,4 @@
-# Chapter 14 — After the Word Dies
+# Chapter 14 — Keep the Graph After the Name Fades
 
 Retirement is a graph query, not a feeling. Compare the declared spec to the traces you actually ran.
 

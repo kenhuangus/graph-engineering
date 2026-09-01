@@ -1,4 +1,4 @@
-# Chapter 13 — Testing, Evaluation, Verification
+# Chapter 13 — Testing, Evaluation, and Verification of Agent Graphs
 
 You are testing topology and contracts, not model quality. `check_trace(trace, spec)` returns the list of invariant violations. Specification drift is a legal-looking walk while the ticket is unmet: unit tests can stay green. Score the artifact against the spec, not only the node sequence.
 

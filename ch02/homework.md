@@ -1,4 +1,4 @@
-# Chapter 2 — Two Graphs, One Word
+# Chapter 2 — Execution Graphs and Memory Graphs
 
 The naming week used one English noun for three objects. Your job is to keep them in separate rooms.
 

@@ -1,4 +1,4 @@
-"""Smoke the in-chapter Chapter 10 listing."""
+"""Behavioral tests for the Chapter 10 three-machines listing."""
 from chapter10_three_machines import DagScheduler, run_agent_graph, run_dag, run_fsm
 
 

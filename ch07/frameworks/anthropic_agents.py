@@ -1,4 +1,4 @@
-"""Chapter 07 — Frameworks You Can Actually Ship On — Anthropic Claude Agent SDK port.
+"""Chapter 07 — Frameworks You Can Ship an Agent Graph On — Anthropic Claude Agent SDK port.
 
 Classify → research → write → review with a guarded back-edge.
 

@@ -1,4 +1,4 @@
-"""Chapter 03 — Harness as Paradigm — Siblings, Not a Ladder — LangGraph port.
+"""Chapter 03 — The Graph Under the Harness — LangGraph port.
 
 Score a structured system against prompt / context / loop / graph / memory.
 

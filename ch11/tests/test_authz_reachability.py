@@ -1,4 +1,4 @@
-"""Smoke the in-chapter Chapter 11 listing."""
+"""Behavioral tests for the Chapter 11 authz reachability listing."""
 from chapter11_authz_reachability import bypass_refund, fanout_blast, governed_refund
 
 

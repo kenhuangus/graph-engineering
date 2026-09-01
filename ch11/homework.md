@@ -1,4 +1,4 @@
-# Chapter 11 — Security, Identity, Governance
+# Chapter 11 — Security, Identity, and Governance of Agent Graphs
 
 An authorization graph is not a vibe. Default deny. Resume is a bound triple, not a courtesy. Git worktrees are the filesystem cut vertex: a worker writes only in its tree; the join is a merge with a typed diff. Scoped tools are the same cut on the identity graph.
 

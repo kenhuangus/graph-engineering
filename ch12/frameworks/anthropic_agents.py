@@ -1,4 +1,4 @@
-"""Chapter 12 — Graph Intelligence — Anthropic Claude Agent SDK port.
+"""Chapter 12 — Graph Intelligence Is Not the Runtime — Anthropic Claude Agent SDK port.
 
 One-layer message passing. This is G_L, not an agent graph.
 

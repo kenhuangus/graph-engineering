@@ -49,20 +49,20 @@ CI on `main` grades the stdlib homework on Python 3.12/3.13 (Linux and Windows) 
 
 | Dir  | Chapter | One-line assignment |
 |------|---------|---------------------|
-| ch01 | The Week the Word Arrived | Reconstruct a directed naming graph from speech-act events and detect a claimed coincidence edge. |
-| ch02 | Two Graphs, One Word | Classify a `GraphObject` as `G_A`, `G_K`, or a run trace; reject mash-ups with a reason code. |
-| ch03 | Harness as Paradigm — Siblings, Not a Ladder | Score a structured system description against prompt / context / loop / graph / memory. |
+| ch01 | Graph Engineering Is Topology You Own | Reconstruct a directed naming graph from speech-act events and detect a claimed coincidence edge. |
+| ch02 | Execution Graphs and Memory Graphs | Classify a `GraphObject` as `G_A`, `G_K`, or a run trace; reject mash-ups with a reason code. |
+| ch03 | The Graph Under the Harness | Score a structured system description against prompt / context / loop / graph / memory. |
 | ch04 | Anatomy of an Agent Graph | Validate a `GraphSpec` (typed nodes, edges, state `S`, halt, optional interrupt). |
 | ch05 | When Not to Build a Graph | Napkin test: `JobSpec` → stay on a loop or build a graph, with closed-set reasons. |
-| ch06 | Patterns That Earn Their Keep | Tiny runtime: `sequential_path`, `supervisor_star`, `fanout_join` on the same job. |
-| ch07 | Frameworks You Can Ship On | Mini `StateGraph`: nodes, edges, reducers, `compile()`, `invoke()`, guarded cycle. |
+| ch06 | Patterns That Earn Their Nodes | Tiny runtime: `sequential_path`, `supervisor_star`, `fanout_join` on the same job. |
+| ch07 | Frameworks You Can Ship an Agent Graph On | Mini `StateGraph`: nodes, edges, reducers, `compile()`, `invoke()`, guarded cycle. |
 | ch08 | Knowledge Graphs as Memory | `TripleStore`: ingest with provenance, wildcard query, neighbor walk; refuse `execute()`. |
 | ch09 | Operating Graphs in Production | Step runner: bounded retry + jitter, idempotency keys, circuit breaker. |
-| ch10 | Computer Science (Kahn / DAG) | `topological_sort`, `has_cycle`, `ready_set` on a diamond DAG. |
-| ch11 | Security, Identity, Governance | Authz graph: default-deny invoke, bound resume, cut-vertex reachability. |
-| ch12 | Graph Intelligence | One-layer message passing: `normalize(self + sum(neighbors))`. |
-| ch13 | Testing, Evaluation, Verification | `check_trace(trace, spec)` for halt, join, and unconstrained spend. |
-| ch14 | After the Word Dies | `retirement_report(spec, traces)`: dead nodes, dead edges, candidates. |
+| ch10 | The Computer Science of Agent Graphs | `topological_sort`, `has_cycle`, `ready_set` on a diamond DAG. |
+| ch11 | Security, Identity, and Governance of Agent Graphs | Authz graph: default-deny invoke, bound resume, cut-vertex reachability. |
+| ch12 | Graph Intelligence Is Not the Runtime | One-layer message passing: `normalize(self + sum(neighbors))`. |
+| ch13 | Testing, Evaluation, and Verification of Agent Graphs | `check_trace(trace, spec)` for halt, join, and unconstrained spend. |
+| ch14 | Keep the Graph After the Name Fades | `retirement_report(spec, traces)`: dead nodes, dead edges, candidates. |
 
 ## Book listings vs homework modules
 

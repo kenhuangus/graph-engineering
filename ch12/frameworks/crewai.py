@@ -1,4 +1,4 @@
-"""Chapter 12 — Graph Intelligence — CrewAI port.
+"""Chapter 12 — Graph Intelligence Is Not the Runtime — CrewAI port.
 
 One-layer message passing. This is G_L, not an agent graph.
 

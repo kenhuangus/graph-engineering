@@ -1,4 +1,4 @@
-"""Chapter 14 — After the Word Dies — Anthropic Claude Agent SDK port.
+"""Chapter 14 — Keep the Graph After the Name Fades — Anthropic Claude Agent SDK port.
 
 retirement_report: dead nodes, dead edges, candidates.
 

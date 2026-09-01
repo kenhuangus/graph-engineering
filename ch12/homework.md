@@ -1,4 +1,4 @@
-# Chapter 12 — Graph Intelligence
+# Chapter 12 — Graph Intelligence Is Not the Runtime
 
 One layer of message passing. No GPU. No numpy required. Stdlib floats.
 

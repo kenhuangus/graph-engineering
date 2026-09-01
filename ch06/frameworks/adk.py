@@ -1,4 +1,4 @@
-"""Chapter 06 — Patterns That Earn Their Keep — Google ADK 2.0 port.
+"""Chapter 06 — Patterns That Earn Their Nodes — Google ADK 2.0 port.
 
 Same job on sequential_path, supervisor_star, and fanout_join.
 

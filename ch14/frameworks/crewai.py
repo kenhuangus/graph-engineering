@@ -1,4 +1,4 @@
-"""Chapter 14 — After the Word Dies — CrewAI port.
+"""Chapter 14 — Keep the Graph After the Name Fades — CrewAI port.
 
 retirement_report: dead nodes, dead edges, candidates.
 

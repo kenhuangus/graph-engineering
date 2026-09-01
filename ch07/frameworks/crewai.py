@@ -1,4 +1,4 @@
-"""Chapter 07 — Frameworks You Can Actually Ship On — CrewAI port.
+"""Chapter 07 — Frameworks You Can Ship an Agent Graph On — CrewAI port.
 
 Classify → research → write → review with a guarded back-edge.
 

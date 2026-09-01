@@ -1,4 +1,4 @@
-"""Chapter 07 — Frameworks You Can Actually Ship On — LangGraph port.
+"""Chapter 07 — Frameworks You Can Ship an Agent Graph On — LangGraph port.
 
 Classify → research → write → review with a guarded back-edge.
 

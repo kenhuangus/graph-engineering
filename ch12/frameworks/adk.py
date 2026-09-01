@@ -1,4 +1,4 @@
-"""Chapter 12 — Graph Intelligence — Google ADK 2.0 port.
+"""Chapter 12 — Graph Intelligence Is Not the Runtime — Google ADK 2.0 port.
 
 One-layer message passing. This is G_L, not an agent graph.
 

@@ -1,4 +1,4 @@
-"""Chapter 13 — Testing, Evaluation, and Verification — Google ADK 2.0 port.
+"""Chapter 13 — Testing, Evaluation, and Verification of Agent Graphs — Google ADK 2.0 port.
 
 check_trace: halt, join, unconstrained spend.
 

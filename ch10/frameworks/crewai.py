@@ -1,4 +1,4 @@
-"""Chapter 10 — The Computer Science Behind Graph Engineering — CrewAI port.
+"""Chapter 10 — The Computer Science of Agent Graphs — CrewAI port.
 
 Kahn topological sort, cycle detection, ready-set on a diamond.
 

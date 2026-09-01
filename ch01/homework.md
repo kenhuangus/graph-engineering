@@ -1,4 +1,4 @@
-# Chapter 1 — The Week the Word Arrived
+# Chapter 1 — Graph Engineering Is Topology You Own
 
 Reconstruct the naming week as a **directed graph of speech acts**, not as a runtime.
 

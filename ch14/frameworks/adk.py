@@ -1,4 +1,4 @@
-"""Chapter 14 — After the Word Dies — Google ADK 2.0 port.
+"""Chapter 14 — Keep the Graph After the Name Fades — Google ADK 2.0 port.
 
 retirement_report: dead nodes, dead edges, candidates.
 

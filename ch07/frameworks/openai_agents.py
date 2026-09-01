@@ -1,4 +1,4 @@
-"""Chapter 07 — Frameworks You Can Actually Ship On — OpenAI Agents SDK port.
+"""Chapter 07 — Frameworks You Can Ship an Agent Graph On — OpenAI Agents SDK port.
 
 Classify → research → write → review with a guarded back-edge.
 

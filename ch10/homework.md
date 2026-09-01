@@ -1,4 +1,4 @@
-# Chapter 10 — Computer Science (Kahn / DAG)
+# Chapter 10 — The Computer Science of Agent Graphs
 
 Implement the three functions a graph runtime is already using, whether it admits it or not.
 

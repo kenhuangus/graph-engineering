@@ -1,4 +1,4 @@
-"""Chapter 14 — After the Word Dies — OpenAI Agents SDK port.
+"""Chapter 14 — Keep the Graph After the Name Fades — OpenAI Agents SDK port.
 
 retirement_report: dead nodes, dead edges, candidates.
 

@@ -1,4 +1,4 @@
-"""Chapter 03 — Harness as Paradigm — Siblings, Not a Ladder — Google ADK 2.0 port.
+"""Chapter 03 — The Graph Under the Harness — Google ADK 2.0 port.
 
 Score a structured system against prompt / context / loop / graph / memory.
 

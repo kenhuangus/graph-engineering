@@ -1,4 +1,4 @@
-"""Smoke the in-chapter Chapter 6 message-graph listing."""
+"""Behavioral tests for the Chapter 6 message-graph listing."""
 from ch06_workers_messages import PACKET, run_message_graph, run_shared_dict_bug
 
 

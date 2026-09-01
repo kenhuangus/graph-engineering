@@ -1,4 +1,4 @@
-"""Chapter 01 — The Week the Word Arrived — Google ADK 2.0 port.
+"""Chapter 01 — Graph Engineering Is Topology You Own — Google ADK 2.0 port.
 
 Reconstruct a directed naming graph from speech-act events.
 

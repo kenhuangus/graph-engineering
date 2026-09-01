@@ -1,4 +1,4 @@
-"""Chapter 13 — Testing, Evaluation, and Verification — Anthropic Claude Agent SDK port.
+"""Chapter 13 — Testing, Evaluation, and Verification of Agent Graphs — Anthropic Claude Agent SDK port.
 
 check_trace: halt, join, unconstrained spend.
 

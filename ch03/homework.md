@@ -1,4 +1,4 @@
-# Chapter 3 — Harness as Paradigm — Siblings, Not a Ladder
+# Chapter 3 — The Graph Under the Harness
 
 Prompt, context, loop, graph, and memory are **siblings** under harness engineering, not rungs on a replacement ladder. Score a *structured* system description (not free text) and report which layer is actually doing the work.
 

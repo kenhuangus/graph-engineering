@@ -1,4 +1,4 @@
-"""Smoke the in-chapter Chapter 8 doorway listing."""
+"""Behavioral tests for the Chapter 8 doorway listing."""
 from datetime import date
 
 from memory_graph_node import ShapeError, MemoryGraph, seed, run_execution_graph

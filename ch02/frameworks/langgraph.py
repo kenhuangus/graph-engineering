@@ -1,4 +1,4 @@
-"""Chapter 02 — Two Graphs, One Word — LangGraph port.
+"""Chapter 02 — Execution Graphs and Memory Graphs — LangGraph port.
 
 Classify a GraphObject as G_A, G_K, or a run trace; refuse mash-ups.
 

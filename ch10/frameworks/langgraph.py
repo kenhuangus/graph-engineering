@@ -1,4 +1,4 @@
-"""Chapter 10 — The Computer Science Behind Graph Engineering — LangGraph port.
+"""Chapter 10 — The Computer Science of Agent Graphs — LangGraph port.
 
 Kahn topological sort, cycle detection, ready-set on a diamond.
 

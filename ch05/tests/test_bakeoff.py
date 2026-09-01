@@ -1,4 +1,4 @@
-"""Smoke the in-chapter Chapter 5 bakeoff listing."""
+"""Behavioral tests for the Chapter 5 bakeoff listing."""
 from loop_vs_graph_bakeoff import INCIDENT, RUBRIC, report, run_graph, run_loop
 
 

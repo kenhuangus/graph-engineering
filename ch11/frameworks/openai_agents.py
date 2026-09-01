@@ -1,4 +1,4 @@
-"""Chapter 11 — Security, Identity, and Governance — OpenAI Agents SDK port.
+"""Chapter 11 — Security, Identity, and Governance of Agent Graphs — OpenAI Agents SDK port.
 
 Default-deny invoke, bound resume, cut-vertex reachability.
 

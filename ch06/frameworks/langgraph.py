@@ -1,4 +1,4 @@
-"""Chapter 06 — Patterns That Earn Their Keep — LangGraph port.
+"""Chapter 06 — Patterns That Earn Their Nodes — LangGraph port.
 
 Same job on sequential_path, supervisor_star, and fanout_join.
 

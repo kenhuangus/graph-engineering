@@ -1,4 +1,4 @@
-"""Chapter 02 — Two Graphs, One Word — Anthropic Claude Agent SDK port.
+"""Chapter 02 — Execution Graphs and Memory Graphs — Anthropic Claude Agent SDK port.
 
 Classify a GraphObject as G_A, G_K, or a run trace; refuse mash-ups.
 

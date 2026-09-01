@@ -1,4 +1,4 @@
-"""Chapter 07 — Frameworks You Can Actually Ship On — Google ADK 2.0 port.
+"""Chapter 07 — Frameworks You Can Ship an Agent Graph On — Google ADK 2.0 port.
 
 Classify → research → write → review with a guarded back-edge.
 

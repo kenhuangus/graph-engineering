@@ -1,4 +1,4 @@
-"""Chapter 06 — Patterns That Earn Their Keep — Anthropic Claude Agent SDK port.
+"""Chapter 06 — Patterns That Earn Their Nodes — Anthropic Claude Agent SDK port.
 
 Same job on sequential_path, supervisor_star, and fanout_join.
 

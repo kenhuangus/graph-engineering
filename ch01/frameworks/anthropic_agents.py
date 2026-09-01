@@ -1,4 +1,4 @@
-"""Chapter 01 — The Week the Word Arrived — Anthropic Claude Agent SDK port.
+"""Chapter 01 — Graph Engineering Is Topology You Own — Anthropic Claude Agent SDK port.
 
 Reconstruct a directed naming graph from speech-act events.
 

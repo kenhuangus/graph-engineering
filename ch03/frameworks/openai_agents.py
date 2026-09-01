@@ -1,4 +1,4 @@
-"""Chapter 03 — Harness as Paradigm — Siblings, Not a Ladder — OpenAI Agents SDK port.
+"""Chapter 03 — The Graph Under the Harness — OpenAI Agents SDK port.
 
 Score a structured system against prompt / context / loop / graph / memory.
 

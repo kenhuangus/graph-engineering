@@ -1,4 +1,4 @@
-"""Chapter 06 — Patterns That Earn Their Keep — OpenAI Agents SDK port.
+"""Chapter 06 — Patterns That Earn Their Nodes — OpenAI Agents SDK port.
 
 Same job on sequential_path, supervisor_star, and fanout_join.
 

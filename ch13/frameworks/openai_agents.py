@@ -1,4 +1,4 @@
-"""Chapter 13 — Testing, Evaluation, and Verification — OpenAI Agents SDK port.
+"""Chapter 13 — Testing, Evaluation, and Verification of Agent Graphs — OpenAI Agents SDK port.
 
 check_trace: halt, join, unconstrained spend.
 

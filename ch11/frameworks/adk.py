@@ -1,4 +1,4 @@
-"""Chapter 11 — Security, Identity, and Governance — Google ADK 2.0 port.
+"""Chapter 11 — Security, Identity, and Governance of Agent Graphs — Google ADK 2.0 port.
 
 Default-deny invoke, bound resume, cut-vertex reachability.
 

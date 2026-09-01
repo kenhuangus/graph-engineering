@@ -1,4 +1,4 @@
-"""Chapter 01 — The Week the Word Arrived — OpenAI Agents SDK port.
+"""Chapter 01 — Graph Engineering Is Topology You Own — OpenAI Agents SDK port.
 
 Reconstruct a directed naming graph from speech-act events.
 

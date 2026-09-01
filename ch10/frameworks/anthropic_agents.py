@@ -1,4 +1,4 @@
-"""Chapter 10 — The Computer Science Behind Graph Engineering — Anthropic Claude Agent SDK port.
+"""Chapter 10 — The Computer Science of Agent Graphs — Anthropic Claude Agent SDK port.
 
 Kahn topological sort, cycle detection, ready-set on a diamond.
 

@@ -1,4 +1,4 @@
-"""Chapter 14 — After the Word Dies — LangGraph port.
+"""Chapter 14 — Keep the Graph After the Name Fades — LangGraph port.
 
 retirement_report: dead nodes, dead edges, candidates.
 

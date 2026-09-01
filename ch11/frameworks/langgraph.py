@@ -1,4 +1,4 @@
-"""Chapter 11 — Security, Identity, and Governance — LangGraph port.
+"""Chapter 11 — Security, Identity, and Governance of Agent Graphs — LangGraph port.
 
 Default-deny invoke, bound resume, cut-vertex reachability.
 

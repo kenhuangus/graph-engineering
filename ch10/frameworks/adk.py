@@ -1,4 +1,4 @@
-"""Chapter 10 — The Computer Science Behind Graph Engineering — Google ADK 2.0 port.
+"""Chapter 10 — The Computer Science of Agent Graphs — Google ADK 2.0 port.
 
 Kahn topological sort, cycle detection, ready-set on a diamond.
 

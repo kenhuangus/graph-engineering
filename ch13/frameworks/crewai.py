@@ -1,4 +1,4 @@
-"""Chapter 13 — Testing, Evaluation, and Verification — CrewAI port.
+"""Chapter 13 — Testing, Evaluation, and Verification of Agent Graphs — CrewAI port.
 
 check_trace: halt, join, unconstrained spend.
 
